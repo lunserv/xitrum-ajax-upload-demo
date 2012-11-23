@@ -1,0 +1,44 @@
+- import quickstart.controller._
+
+!!! 5
+html
+  head
+    != antiCSRFMeta
+    != xitrumCSS
+
+    meta(content="text/html; charset=utf-8" http-equiv="content-type")
+    title My new Xitrum project
+
+    link(type="image/vnd.microsoft.icon" rel="shortcut icon" href={urlForPublic("favicon.ico")})
+
+    link(type="text/css" rel="stylesheet" media="all" href={urlForPublic("css/960/reset.css")})
+    link(type="text/css" rel="stylesheet" media="all" href={urlForPublic("css/960/text.css")})
+    link(type="text/css" rel="stylesheet" media="all" href={urlForPublic("css/960/960.css")})
+    link(type="text/css" rel="stylesheet" media="all" href={urlForPublic("css/app.css")})
+
+    != jsDefaults
+    
+    script(type="text/javascript" src={urlForPublic("js/jquery.fineuploader-3.0.min.js")})
+
+  body
+    .container_12
+      h1
+        a(href={Site.index.url}) My new Xitrum project
+      
+      #jquery-wrapped-fine-uploader
+      :javascript
+        $(document).ready(function () {
+          $("#jquery-wrapped-fine-uploader").fineUploader({
+            request: {
+              endpoint: "upload",
+              params: {"csrf-token": $("meta[name=csrf-token]").attr("content")}
+            },
+            debug: true
+          });
+        });
+      #flash
+        !~ jsRenderFlash()
+      != renderedView
+
+    != jsForView
+    
